@@ -68,7 +68,7 @@ function App() {
       setSearchQuery('');
       fetchSearchHistory();
     } catch (err) {
-      setError(err.response?.data?.message || 'City not found! Try another city.');
+      setError(err.response?.data?.message || 'Abe Lowde Sahi City Select Kar Na...');
       setCurrentWeather(null);
       setForecastData([]);
     } finally {
@@ -470,7 +470,7 @@ function App() {
 
       {/* Footer */}
       <footer className="app-footer">
-        <p>Made with ❤️ using OpenWeatherMap API</p>
+        <p>Made ❤️ By Sahil Ibrahim</p>
         <p className="footer-note">Real-time weather data for Indian cities</p>
       </footer>
     </div>
