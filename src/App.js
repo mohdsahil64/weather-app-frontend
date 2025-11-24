@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_BASE = process.env.REACT_APP_API_BASE;
+const API_BASE = process.env.API_BASE;
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
