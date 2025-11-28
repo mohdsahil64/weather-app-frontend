@@ -19,9 +19,22 @@ function App() {
 
   // Update time every second
   useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const timeout = setTimeout(() => {
+    if (searchQuery) {
+      axios.get(`${API_BASE}/cities/search?q=${searchQuery}`)
+        .then(res => setSuggestions(Array.isArray(res.data) ? res.data : []))
+        .catch(err => {
+          console.error("Autocomplete error:", err);
+          setSuggestions([]);
+        });
+    } else {
+      setSuggestions([]);
+    }
+  }, 400); // 400ms delay
+
+  return () => clearTimeout(timeout);
+}, [searchQuery]);
+
 
   // Fetch search history on mount
   useEffect(() => {
@@ -38,20 +51,22 @@ function App() {
   };
 
   const handleSearchChange = async (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    
-    if (value.length > 0) {
-      try {
-        const response = await axios.get(`${API_BASE}/cities/search?q=${value}`);
-        setSuggestions(response.data);
-      } catch (error) {
-        console.error('Error fetching suggestions:', error);
-      }
-    } else {
-      setSuggestions([]);
+  const value = e.target.value;
+  setSearchQuery(value);
+
+  if (value.length > 0) {
+    try {
+      const response = await axios.get(`${API_BASE}/cities/search?q=${value}`);
+      // अगर response.data array नहीं है तो empty array assign करो
+      setSuggestions(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+      setSuggestions([]); // error पर भी crash न हो
     }
-  };
+  } else {
+    setSuggestions([]);
+  }
+};
 
   const fetchWeather = async (city) => {
     setLoading(true);
