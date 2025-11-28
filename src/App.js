@@ -73,24 +73,25 @@ function App() {
     setError('');
     
     try {
-      const [weatherRes, forecastRes] = await Promise.all([
-        axios.get(`${API_BASE}/weather/${city}`),
-        axios.get(`${API_BASE}/forecast/${city}`)
-      ]);
-      
-      setCurrentWeather(weatherRes.data);
-      setForecastData(forecastRes.data);
-      setSuggestions([]);
-      setSearchQuery('');
-      fetchSearchHistory();
-    } catch (err) {
-      setError(err.response?.data?.message || 'Abe Lowde Sahi City Select Kar Na...');
-      setCurrentWeather(null);
-      setForecastData([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+     const [weatherRes, forecastRes] = await Promise.all([
+  axios.get(`${API_BASE}/api/weather/${city}`),
+  axios.get(`${API_BASE}/api/forecast/${city}`)
+]);
+
+setCurrentWeather(weatherRes.data);
+setForecastData(forecastRes.data);
+setSuggestions([]);
+setSearchQuery('');
+fetchSearchHistory();
+} catch (err) {
+  console.error("Weather fetch error:", err);
+  setError(err.response?.data?.message || 'City not found, please try again.');
+  setCurrentWeather(null);
+  setForecastData([]);
+} finally {
+  setLoading(false);
+}
+
 
   const handleSearch = (city) => {
     if (city.trim()) {
@@ -486,7 +487,7 @@ function App() {
 
       {/* Footer */}
       <footer className="app-footer">
-        <p>Made ❤️ By Sahil Ibrahim</p>
+        <p>Made By Sahil Ibrahim</p>
         <p className="footer-note">Real-time weather data for Indian cities</p>
       </footer>
     </div>
