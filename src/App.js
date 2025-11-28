@@ -73,24 +73,31 @@ function App() {
     setError('');
     
     try {
-     const [weatherRes, forecastRes] = await Promise.all([
-  axios.get(`${API_BASE}/api/weather/${city}`),
-  axios.get(`${API_BASE}/api/forecast/${city}`)
-]);
 
-setCurrentWeather(weatherRes.data);
-setForecastData(forecastRes.data);
-setSuggestions([]);
-setSearchQuery('');
-fetchSearchHistory();
-} catch (err) {
-  console.error("Weather fetch error:", err);
-  setError(err.response?.data?.message || 'City not found, please try again.');
-  setCurrentWeather(null);
-  setForecastData([]);
-} finally {
-  setLoading(false);
-}
+      const fetchWeather = async (city) => {
+  setLoading(true);
+  setError('');
+    
+  try {
+    const [weatherRes, forecastRes] = await Promise.all([
+      axios.get(`${API_BASE}/api/weather/${city}`),
+      axios.get(`${API_BASE}/api/forecast/${city}`)
+    ]);
+
+    setCurrentWeather(weatherRes.data);
+    setForecastData(forecastRes.data);
+    setSuggestions([]);
+    setSearchQuery('');
+    fetchSearchHistory();
+  } catch (err) {
+    console.error("Weather fetch error:", err);
+    setError(err.response?.data?.message || 'City not found, please try again.');
+    setCurrentWeather(null);
+    setForecastData([]);
+  } finally {
+    setLoading(false);
+  }
+}; // ✅ यहाँ function properly बंद कर दिया
 
 
   const handleSearch = (city) => {
