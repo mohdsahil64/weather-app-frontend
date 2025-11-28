@@ -68,16 +68,10 @@ function App() {
   }
 };
 
-  const fetchWeather = async (city) => {
-    setLoading(true);
-    setError('');
-    
-    try {
-
-      const fetchWeather = async (city) => {
+ const fetchWeather = async (city) => {
   setLoading(true);
   setError('');
-    
+
   try {
     const [weatherRes, forecastRes] = await Promise.all([
       axios.get(`${API_BASE}/api/weather/${city}`),
@@ -97,7 +91,8 @@ function App() {
   } finally {
     setLoading(false);
   }
-}; // ✅ यहाँ function properly बंद कर दिया
+}; // ✅ only one definition, properly closed
+
 
 
   const handleSearch = (city) => {
