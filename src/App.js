@@ -145,7 +145,7 @@ function App() {
       {/* Navigation Bar */}
       <nav className="navbar">
         <div className="nav-brand" onClick={goHome}>
-          <span className="brand-icon">🌦️</span>
+          <span className="brand-icon"></span>
           <span className="brand-text">Sahil Ibrahim</span>
         </div>
         
@@ -177,6 +177,32 @@ function App() {
         </div>
       </nav>
 
+ {/* Search Section */}
+      <div className="search-section">
+        <div className="search-wrapper">
+          <div className="search-box">
+            <span className="search-icon">🔍</span>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search for any Indian city..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
+            />
+            {searchQuery && (
+              <button className="clear-btn" onClick={() => setSearchQuery('')}>
+                ✕
+              </button>
+            )}
+            <button 
+              className="search-button" 
+              onClick={() => handleSearch(searchQuery)}
+              disabled={!searchQuery.trim()}
+            >
+              Search
+            </button>
+          </div>
       {/* Hero Section */}
       {!currentWeather && (
         <header className="hero-header">
@@ -213,33 +239,6 @@ function App() {
           </div>
         </header>
       )}
-
-      {/* Search Section */}
-      <div className="search-section">
-        <div className="search-wrapper">
-          <div className="search-box">
-            <span className="search-icon">🔍</span>
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search for any Indian city..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
-            />
-            {searchQuery && (
-              <button className="clear-btn" onClick={() => setSearchQuery('')}>
-                ✕
-              </button>
-            )}
-            <button 
-              className="search-button" 
-              onClick={() => handleSearch(searchQuery)}
-              disabled={!searchQuery.trim()}
-            >
-              Search
-            </button>
-          </div>
 
           {/* Autocomplete Suggestions */}
           {suggestions.length > 0 && (
@@ -318,7 +317,7 @@ function App() {
       {loading && (
         <div className="loading-container">
           <div className="loading-spinner"></div>
-          <p className="loading-text">Fetching weather data...</p>
+          <p className="loading-text">Please Select a Valid City....</p>
         </div>
       )}
 
